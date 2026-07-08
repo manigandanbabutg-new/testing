@@ -1,0 +1,237 @@
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Outlet Gadgets</title>
+
+<link rel="manifest" href="/manifest.json">
+
+<meta name="theme-color" content="#2563eb">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0f172a;
+}
+
+/* INSTALL OVERLAY */
+
+#installOverlay{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+background:rgba(0,0,0,.65);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+backdrop-filter:blur(8px);
+
+}
+
+.card{
+
+width:380px;
+
+background:white;
+
+border-radius:20px;
+
+padding:30px;
+
+text-align:center;
+
+box-shadow:0 20px 40px rgba(0,0,0,.3);
+
+animation:popup .4s ease;
+
+}
+
+@keyframes popup{
+
+from{
+
+transform:scale(.7);
+opacity:0;
+
+}
+
+to{
+
+transform:scale(1);
+opacity:1;
+
+}
+
+}
+
+.logo{
+
+width:90px;
+height:90px;
+
+margin:auto;
+
+margin-bottom:20px;
+
+border-radius:18px;
+
+}
+
+h2{
+
+margin-bottom:10px;
+
+color:#111827;
+
+}
+
+p{
+
+color:#6b7280;
+
+line-height:25px;
+
+margin-bottom:30px;
+
+}
+
+.buttons{
+
+display:flex;
+
+gap:15px;
+
+}
+
+button{
+
+flex:1;
+
+padding:14px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:16px;
+
+cursor:pointer;
+
+}
+
+.install{
+
+background:#2563eb;
+
+color:white;
+
+}
+
+.later{
+
+background:#e5e7eb;
+
+}
+
+.install:hover{
+
+background:#1d4ed8;
+
+}
+
+.later:hover{
+
+background:#d1d5db;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- INSTALL OVERLAY -->
+
+<div id="installOverlay">
+
+<div class="card">
+
+<img src="/Frame 4.png" class="logo">
+
+<h2>Install Outlet Gadgets</h2>
+
+<p>
+
+Install this app for a faster shopping experience,
+offline support and one-tap access from your Home Screen.
+
+</p>
+
+<div class="buttons">
+
+<button class="later">
+Later
+</button>
+
+<button
+id="installButton"
+class="install">
+Install
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- React App -->
+
+<div id="root"></div>
+
+<script type="module" src="/src/main.tsx"></script>
+
+<script>
+
+if ('serviceWorker' in navigator) {
+
+window.addEventListener('load', () => {
+
+navigator.serviceWorker.register('/service-worker.js')
+
+.then(() => {
+
+console.log("Service Worker Registered");
+
+});
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

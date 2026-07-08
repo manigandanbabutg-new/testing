@@ -1,0 +1,22 @@
+{
+  "name": "Outlet Gadgets",
+  "short_name": "Outlet",
+  "description": "Online Electronics Shopping",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "Frame 4.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "Frame 3.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
