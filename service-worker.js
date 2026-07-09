@@ -2,7 +2,6 @@ const CACHE_NAME = "outlet-gadgets-v1";
 
 const urlsToCache = [
   "/",
-  "/index.html",
    "/manifest.json"
 ];
 
