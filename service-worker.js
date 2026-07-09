@@ -1,55 +1,66 @@
 const CACHE_NAME = "outlet-gadgets-v1";
 
 const urlsToCache = [
-  "/",
-   "/manifest.json"
+    "/",
+    "/index.html",
+    "/offline.html",
+    "/manifest.json",
+    "/Frame 4.png",
+    "/icon-192.png",
+    "/icon-512.png"
 ];
 
 // Install
 self.addEventListener("install", (event) => {
-  console.log("Service Worker Installed");
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => cache.addAll(urlsToCache))
+    );
 
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
-    })
-  );
-
-  self.skipWaiting();
+    self.skipWaiting();
 });
 
 // Activate
 self.addEventListener("activate", (event) => {
-  console.log("Service Worker Activated");
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(
+                keys.map(key => {
+                    if (key !== CACHE_NAME) {
+                        return caches.delete(key);
+                    }
+                })
+            )
+        )
+    );
 
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-
-  self.clients.claim();
+    self.clients.claim();
 });
 
 // Fetch
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
 
-      if (response) {
-        return response;
-      }
+    event.respondWith(
 
-      return fetch(event.request).catch(() => {
-        return caches.match("/offline.html");
-      });
+        caches.match(event.request)
 
-    })
-  );
+        .then(response => {
+
+            if (response) {
+                return response;
+            }
+
+            return fetch(event.request)
+                .catch(() => {
+
+                    if (event.request.mode === "navigate") {
+                        return caches.match("/offline.html");
+                    }
+
+                });
+
+        })
+
+    );
+
 });
